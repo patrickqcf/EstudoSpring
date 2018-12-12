@@ -9,11 +9,17 @@ import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.projetos.cursomc.domain.enums.TipoCliente;
 @Entity
@@ -33,10 +39,17 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
+//	Este trecho de código foi tentando resolver o problema de output cíclico, mas no final era um @JsonIgnore no atributos de pedidos que dava merda
+//	Vou deixar aqui para que eu me lembre o que foi.
+//	@Fetch(FetchMode.SELECT) //Os fetchs foram incluídos para resolver o problema de output cíclico no json, se tirar ele repete ad infinitum
+//	@ElementCollection(fetch = FetchType.EAGER)
+//	@CollectionTable(name="TELEFONE", joinColumns = @JoinColumn(name ="cliente_id"))
+	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefone = new HashSet<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
