@@ -108,11 +108,11 @@ public class Cliente implements Serializable {
 		this.enderecos = enderecos;
 	}
 
-	public Set<String> getTelefone() {
+	public Set<String> getTelefones() {
 		return telefone;
 	}
 
-	public void setTelefone(Set<String> telefone) {
+	public void setTelefones(Set<String> telefone) {
 		this.telefone = telefone;
 	}
 
